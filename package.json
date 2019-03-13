@@ -1,0 +1,40 @@
+{
+  "name": "fullstack-js-mern",
+  "version": "1.0.0",
+  "description": "full stack javascript application complemented with a standard MERN stack with SSR set up",
+  "main": "./src/server/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev-server": "nodemon --exec babel-node src/server/server.js --ignore dist/",
+    "dev-bundle": "webpack -wd",
+    "serve": "concurrently \"npm run dev-server\" \"npm run dev-bundle\""
+  },
+  "author": "joey abouharb",
+  "license": "MIT",
+  "dependencies": {
+    "@babel/core": "^7.3.4",
+    "@babel/node": "^7.2.2",
+    "@babel/preset-env": "^7.3.4",
+    "@babel/preset-react": "^7.0.0",
+    "babel-loader": "^8.0.5",
+    "ejs": "^2.6.1",
+    "express": "^4.16.4",
+    "pug": "^2.0.3",
+    "react": "^16.8.4",
+    "react-dom": "^16.8.4",
+    "react-router": "^4.3.1",
+    "react-router-dom": "^4.3.1",
+    "webpack": "^4.29.6",
+    "webpack-cli": "^3.2.3"
+  },
+  "devDependencies": {
+    "babel-eslint": "^10.0.1",
+    "babel-jest": "^24.5.0",
+    "concurrently": "^4.1.0",
+    "eslint": "^5.15.1",
+    "eslint-plugin-react": "^7.12.4",
+    "jest": "^24.5.0",
+    "nodemon": "^1.18.10",
+    "react-test-renderer": "^16.8.4"
+  }
+}

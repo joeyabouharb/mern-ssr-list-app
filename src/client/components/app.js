@@ -1,21 +1,21 @@
 import React, {Component} from 'react';
 import Routes from './routes';
-import {NavLink} from 'react-router-dom';
+import {Link} from 'react-router-dom';
+import {Container, Row, Nav} from 'reactstrap';
 class App extends Component {
  
   render(){
   return (
-    <div>
-        <ul>
-        <li>
-          <NavLink to="/" className="link">Home</NavLink>
-        </li>
-        <li>
-          <NavLink to="/add" className="link">add note</NavLink>
-        </li>
-      </ul>
+    <Container>
+      <Row>
+        <Nav>
+          <Link className="nav-item nav-link" to="/">Home</Link>
+          <Link className="nav-item nav-link" to="/add">add note</Link>
+      </Nav>
+      </Row>
     <Routes/>
-    </div>
+
+    </Container>
       
   );
   }

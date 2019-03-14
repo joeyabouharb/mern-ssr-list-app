@@ -1,16 +1,18 @@
 import Home from '../client/components/home';
 import Add from '../client/components/add';
-
-const routes =  [
+import {getNotes} from '../services/noteService';
+const routeController =  [
   {
     path: '/',
     exact: true,
     component: Home,
+    getNotes: getNotes(),
   },
   {
     path: '/home',
     exact: true,
     component: Home,
+    getNotes: getNotes(),
   },
   {
     path: '/add',
@@ -19,4 +21,4 @@ const routes =  [
   },
 ]
 
-export default routes;
+export default routeController;

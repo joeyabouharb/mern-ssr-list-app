@@ -1,11 +1,23 @@
 import React, { Component } from 'react'
-
+import {Container, Row} from 'reactstrap';
 export default class Home extends Component {
+  constructor(props){
+   
+    super(props);
+    this.state = {
+      notes: [],
+    };
+   
+  }
+
   render() {
     return (
-      <div>
+      <Container>
         <h2>Home Page</h2>
-      </div>
+        <Row>
+        </Row>
+      </Container>
     )
   }
 }
+

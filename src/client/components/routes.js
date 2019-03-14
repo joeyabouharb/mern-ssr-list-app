@@ -1,15 +1,16 @@
 import React, { Component } from 'react'
 import {Switch, Route} from 'react-router-dom';
-import Home from './home';
-import Add from './add';
+import routeController from '../../routes/routeController';
 export default class Routes extends Component {
   render() {
     return (
-     <Switch>
-       <Route exact path="/"  component={Home}/>
-       <Route path="/home" component={Home}/>
-       <Route path="/add" component={Add}/>
-     </Switch>
+      <Switch>
+      {routeController.map(({ path, exact, component: Component, ...rest }) => (
+        <Route key={path} path={path} exact={exact} render={(props) => (
+          <Component {...props} {...rest} />
+        )} />
+      ))}
+    </Switch>
     )
   }
 }

@@ -40,7 +40,18 @@ export default class Home extends Component {
         <h2>Home Page</h2>
         {
           notes.map(note => {
-            <div key={note._id}>{note.name}</div>
+            return (
+            <div className="row rounded" key={note._id}>
+
+            <div className="col-3">
+            {note.severity}
+            </div>
+            <div className="col-3">
+            {note.name} 
+            </div>
+             
+            </div>
+            )
           })
         }
       

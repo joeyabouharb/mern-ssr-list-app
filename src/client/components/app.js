@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
-import Routes from './routes';
+import routeController from '../../routes/routeController';
 import {Link} from 'react-router-dom';
+import {Switch, Route} from 'react-router'
 import {Container, Row, Nav} from 'reactstrap';
 class App extends Component {
  
@@ -13,7 +14,13 @@ class App extends Component {
           <Link className="nav-item nav-link" to="/add">add note</Link>
       </Nav>
       </Row>
-    <Routes/>
+      <Switch>
+      {routeController.map(({ path, exact, component: Component, ...rest }) => (
+        <Route key={path} path={path} exact={exact} render={(props) => (
+          <Component {...props} {...rest} />
+        )} />
+      ))}
+    </Switch>
 
     </Container>
       

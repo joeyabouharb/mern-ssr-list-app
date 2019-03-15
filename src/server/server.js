@@ -3,7 +3,7 @@ import express from 'express';
 import path from 'path';
 import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
-
+import serialize from 'serialize-javascript';
 //middlewares
 const server = express();
 
@@ -24,6 +24,7 @@ db.once('open', () => {
 server.set('views', path.join(__dirname, '../views'));
 server.set('view engine', 'ejs');
 server.use(express.static('public'));
+server.locals.serialize = serialize;
 
 // parse application/x-www-form-urlencoded
 server.use(bodyParser.urlencoded({ extended: false }));
@@ -39,19 +40,21 @@ import ReactDOMServer from 'react-dom/server';
 import React from 'react';
 import App from '../client/components/app';
 import { StaticRouter } from 'react-router-dom';
-
+import { getNotes } from '../services/noteService';
 server.get('*', (req, res) => {
     
-
-      const context = {}
-
-    const markup = ReactDOMServer.renderToString(
-      <StaticRouter location={req.url} context={context}>
-        <App />
-      </StaticRouter>
-    )
-    res.render('index', {markup});
-
+    
+    getNotes().then(data => {
+      const context = {data};
+      const markup = ReactDOMServer.renderToString(
+        <StaticRouter location={req.url} context={context}>
+          <App />
+        </StaticRouter>
+      )
+      res.render('index',
+       {markup, data},
+       );
+    }).catch(err => {throw err});
 });
 
 server.listen(8080, () => console.log('Server is running...'));

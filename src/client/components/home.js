@@ -1,7 +1,8 @@
+/* eslint-disable react/prop-types */
 import React, { Component } from 'react'
-import {Container, Row} from 'reactstrap';
+import {ListGroup, ListGroupItem} from 'reactstrap';
 import { getNotes } from '../../services/noteService';
-import {Notes} from './Notes';
+import {Link} from 'react-router-dom'
 export default class Home extends Component {
   constructor(props){
    super(props);
@@ -33,30 +34,38 @@ export default class Home extends Component {
       }
     }, 0);
   }
+  getClassName(severity){
+    if(severity === 'Low') return 'info';
+    if(severity === 'Medium') return 'warning';
+    if(severity === 'High') return 'danger';
+    return ''
+  }
+
   render() {
     const {notes} = this.state;
     return (
       <div>
         <h2>Home Page</h2>
-        {
-          notes.map(note => {
-            return (
-            <div className="row rounded" key={note._id}>
+        <ListGroup>
+         {
+           notes.map(({name, severity, _id},index) =>{
+             return (
+            
+               <ListGroupItem style={styles.listItem} key={index}
+                color={this.getClassName(severity)}>
+                <Link to={`/note/${_id}`}>{name}</Link>
+               </ListGroupItem>
 
-            <div className="col-3">
-            {note.severity}
-            </div>
-            <div className="col-3">
-            {note.name} 
-            </div>
-             
-            </div>
-            )
-          })
-        }
-      
+             )
+           })
+         }
+        </ListGroup>
       </div>
     )
   }
 }
-
+const styles = {
+  listItem: {
+    marginTop: '6px'
+  }
+}

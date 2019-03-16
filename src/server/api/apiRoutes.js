@@ -1,5 +1,6 @@
 import express from 'express';
 import Note from '../models/Note';
+import mongoose from 'mongoose';
 const routes = express.Router();
 
 routes.get('/get-notes', (req, res) => {
@@ -11,6 +12,18 @@ routes.get('/get-notes', (req, res) => {
     }
   })
 })
+
+routes.get('/note/:id', (req, res) => {
+  const id = mongoose.Types.ObjectId(req.url.split('/').filter(el => el).pop());
+  Note.findById(id, (err, note) =>{
+    if(err){
+      throw err;
+    }else{
+      res.json(note);
+    }
+  })
+  
+});
 
 routes.post('/add', (req, res) =>{
   const { name, severity, description } = req.body;

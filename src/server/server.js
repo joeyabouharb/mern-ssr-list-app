@@ -36,25 +36,31 @@ import routes from './api/apiRoutes';
 
 server.use('/api', routes);
 
-import ReactDOMServer from 'react-dom/server';
+import {renderToString} from 'react-dom/server';
 import React from 'react';
 import App from '../client/components/app';
-import { StaticRouter } from 'react-router-dom';
-import { getNotes } from '../services/noteService';
-server.get('*', (req, res) => {
-    
-    
-    getNotes().then(data => {
-      const context = {data};
-      const markup = ReactDOMServer.renderToString(
-        <StaticRouter location={req.url} context={context}>
-          <App />
-        </StaticRouter>
-      )
-      res.render('index',
-       {markup, data},
-       );
-    }).catch(err => {throw err});
+import { StaticRouter, matchPath } from 'react-router-dom';
+import routeController from '../routes/routeController';
+server.get('*', (req, res, next) => {
+  const activeRoute = routeController.find((route) => matchPath(req.url, route)) || {};
+  const path = req.url.split('/').filter(el => el).pop();
+  
+  const promise = activeRoute.service()
+  ? activeRoute.service(path)
+  : Promise.resolve()
+
+promise.then((data) => {
+  const context = { data };
+
+  const markup = renderToString(
+    <StaticRouter location={req.url} context={context}>
+      <App />
+    </StaticRouter>
+  );
+
+    res.render('index', {data, markup});
+}).catch(next)
+  
 });
 
 server.listen(8080, () => console.log('Server is running...'));

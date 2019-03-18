@@ -20,10 +20,12 @@ db.once('open', () => {
   console.log('Connected to Database');
 });
 
+
 // set up view render engine
 server.set('views', path.join(__dirname, '../views'));
 server.set('view engine', 'ejs');
-server.use(express.static('public'));
+
+server.use( express.static( path.resolve( __dirname, "../../dist/" ) ) );
 server.locals.serialize = serialize;
 
 // parse application/x-www-form-urlencoded
@@ -44,10 +46,10 @@ import routeController from '../routes/routeController';
 server.get('*', (req, res, next) => {
   const activeRoute = routeController.find((route) => matchPath(req.url, route)) || {};
   const path = req.url.split('/').filter(el => el).pop();
-  
-  const promise = activeRoute.service()
+  const promise = activeRoute.service
   ? activeRoute.service(path)
   : Promise.resolve()
+
 
 promise.then((data) => {
   const context = { data };

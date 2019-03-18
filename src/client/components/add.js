@@ -1,11 +1,9 @@
 import React, { Component } from 'react'
 import FormNote from './form-note';
-import axios from 'axios';
 export default class Add extends Component {
   constructor(props){
     super(props);
     this.state = {
-      _id: '',
       name: '',
       severity: '',
       description: '',
@@ -23,6 +21,8 @@ export default class Add extends Component {
       description: this.state.description
     };
     this.props.postService(note);
+    this.props.history.push('/');
+   
   }
 
   onNameChange(event){

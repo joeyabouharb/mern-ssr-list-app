@@ -11,6 +11,8 @@ Container,
 Row,
 Col,
 Button} from 'reactstrap';
+import {Link} from 'react-router-dom';
+import { ENETUNREACH } from 'constants';
 export default class Note extends Component {
   constructor(props){
     super(props);
@@ -23,7 +25,7 @@ export default class Note extends Component {
        note: {},
      };
    }
-    
+    this.onDeleteSubmit = this.onDeleteSubmit.bind(this);
    }
  
    componentDidMount() {
@@ -43,6 +45,12 @@ export default class Note extends Component {
        }
      }, 0);
    }
+   onDeleteSubmit(event){
+     event.preventDefault();
+     const _id = this.state.note._id;
+     this.props.postService(_id);
+     this.props.history.push('/');
+   }
   render() {
     const {note} = this.state;
     return (
@@ -58,8 +66,11 @@ export default class Note extends Component {
         </CardBody>
         <CardBody>
           <CardText>{note.description}</CardText>
-          <Button href="#">Delete</Button>
-          <CardLink href="#">Edit</CardLink>
+          <form onSubmit={this.onDeleteSubmit}>
+          <Button type="submit">Delete</Button>
+          </form>
+          
+          <Link  to={`/edit/${note._id}`} >Edit</Link>
         </CardBody>
       <CardFooter> <CardSubtitle><small>Note Created: {note.date}</small></CardSubtitle> </CardFooter>
       </Card>

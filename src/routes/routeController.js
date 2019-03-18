@@ -2,7 +2,6 @@ import Home from '../client/components/home';
 import Add from '../client/components/add';
 import Note from '../client/components/Note'
 import Edit from '../client/components/edit';
-import Delete from '../client/components/delete';
 import * as services from '../services/noteService';
 const routeController =  [
   {
@@ -25,19 +24,14 @@ const routeController =  [
   {
     path: '/note/:id',
     component: Note,
-    service : (path = '') => services.getSingle(path) 
+    service : (path = '') => services.getSingle(path),
+    postService : (_id) => services.deleteNote(_id),
   },
   {
-    path: '/edit',
+    path: '/edit/:id',
     component: Edit,
-    service : () => null,
+    service : (path = '') => services.getSingle(path),
     postService : (note) => services.editNote(note),
-  },
-  {
-    path : '/delete',
-    component : Delete,
-    service : () => null,
-    postService : (note) => services.deleteNote(note),
   }
 ]
 

@@ -16,24 +16,24 @@ export function getSingle(id){
 export function addNote(note){
   axios.post(`${host}/add`, note)
   .then((response) => {
-    alert(response.data);
+    return response.status;
   }).catch(error => {
     throw error;
   });
 }
 export function editNote(note){
-  axios.post(`${host}/edit`, note)
+  axios.put(`${host}/edit`, note)
   .then((response) => {
-    alert(response.data);
+    return response.status;
   }).catch(error => {
     throw error;
   });
 }
 
-export function deleteNote(note){
-  axios.post(`${host}/delete`, note)
+export function deleteNote(_id){
+  axios.delete(`${host}/delete/${_id}`)
   .then((response) => {
-    alert(response.data);
+    return response.status;
   }).catch(error => {
     throw error;
   });

@@ -8,8 +8,8 @@ module.exports = {
     main: ["./src/renderers/dom.js"],
   },
   output: {
-    path: path.resolve("public", "bundles"),
-    filename: isDev ? "[name].js" : "[name].[chunkhash].js",
+    path: path.resolve( __dirname, "dist/bundles" ),
+    filename: "main.js",
   },
   module: {
     rules: [

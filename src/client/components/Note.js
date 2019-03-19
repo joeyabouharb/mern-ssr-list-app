@@ -23,6 +23,7 @@ export default class Note extends Component {
    } else {
      this.state = {
        note: {},
+       loading: true
      };
    }
     this.onDeleteSubmit = this.onDeleteSubmit.bind(this);
@@ -32,7 +33,8 @@ export default class Note extends Component {
      setTimeout(() => {
        if (window.__R_DATA) {
          this.setState({
-           note: window.__R_DATA
+           note: window.__R_DATA,
+           loading: false
          });
          delete window.__R_DATA;
        } else {
@@ -40,6 +42,7 @@ export default class Note extends Component {
          this.props.service(url).then(note => {
            this.setState({
              note,
+             loading: false
            })
          })
        }
@@ -52,7 +55,14 @@ export default class Note extends Component {
      this.props.history.push('/');
    }
   render() {
-    const {note} = this.state;
+    const {note, loading} = this.state;
+    if(loading){
+      return(
+        <div>
+          Loading...
+        </div>
+      )
+    }
     return (
          <Card body>
          <CardHeader>

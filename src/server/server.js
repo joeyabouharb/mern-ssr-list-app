@@ -40,7 +40,7 @@ server.use('/api', routes);
 
 import {renderToString} from 'react-dom/server';
 import React from 'react';
-import App from '../client/components/app';
+import App from '../client/components/App';
 import { StaticRouter, matchPath } from 'react-router-dom';
 import routeController from '../routes/routeController';
 server.get('*', (req, res, next) => {
